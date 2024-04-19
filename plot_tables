@@ -1,0 +1,60 @@
+library(tidyverse)
+library(gt)
+library(gapminder)
+
+
+#transformar em porcentagem
+prop$`% do corpus (γ)` <- prop$`% do corpus (γ)` * 100
+
+#Fazer tabela
+tabelprop <- prop %>%
+  gt(groupname_col = "agreg") %>%
+  tab_header(
+    title = md("**Tabela 1: Tópicos do STM e Agregação - Proposições**")
+  ) %>%
+  tab_footnote(
+    footnote = "Fonte: elaboração própria"
+  ) %>%
+  summary_rows(
+    columns = c(`% do corpus (γ)`, `nº de documentos`),
+    fns = list(label = md("**Total Agregação**") , fn = "sum"),
+    fmt = NULL,
+    side = "bottom",
+    missing_text = "",
+    formatter = NULL
+  ) %>%
+  tab_options(
+    row_group.as_column = TRUE,
+    summary_row.background.color = "gray95",
+    row_group.background.color = "#FFEFDB",
+  )
+#tabela proposições
+tabelprop %>% gtsave(filename = "tabelprop3.png", vwidth = 1500,
+                     vheight = 4500)
+#transformar em porcentagem
+decr$`% do corpus (γ)` <- decr$`% do corpus (γ)` * 100
+
+tabeldecr <- decr %>%
+  gt(groupname_col = "agreg") %>%
+  tab_header(
+    title = md("**Tabela 2: Tópicos do STM e Agregação - Decretos**")
+  ) %>%
+  tab_footnote(
+    footnote = "Fonte: elaboração própria"
+  ) %>%
+  summary_rows(
+    columns = c(`% do corpus (γ)`, `nº de documentos`),
+    fns = list(label = md("**Total Agregação**") , fn = "sum"),
+    fmt = NULL,
+    side = "bottom",
+    missing_text = "",
+    formatter = NULL
+  ) %>%
+  tab_options(
+    row_group.as_column = TRUE,
+    summary_row.background.color = "gray95",
+    row_group.background.color = "#FFEFDB",
+  )
+#salvar tabela decretos
+tabeldecr %>% gtsave(filename = "tabeldecr.png", vwidth = 1500,
+                     vheight = 4500)
